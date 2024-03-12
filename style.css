@@ -1,0 +1,14 @@
+body {
+  background: aliceblue;
+}
+
+.banner {
+  background: #70e6ef;
+}
+nav {
+  background: #ef7070;
+  opacity: 0.8;
+}
+img {
+  max-height: 300px;
+}

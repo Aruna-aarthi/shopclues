@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="style.css">
+    <script src="angular.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body ng-app = "myModule" ng-controller = "myController">
+
+
+    <nav id="navbar-example2" class="navbar navbar-fixed-top bg-body-tertiary px-3 mb-3 ">
+      <a class="navbar-brand" href="#">Ecommerce</a>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="#scrollspyHeading1">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#cart_anchor">MyCart</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            href="#"
+            role="button"
+            aria-expanded="false"
+            >Profile</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="#">Personal Info</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#">Orders</a>
+              </li>
+            <li>
+              <a class="dropdown-item" href="#">Track</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Payment</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="#">Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="px-lg-5" >
+      
+          <!-- Lead -->
+          <div class="row py-5">
+            <div class="col-lg-12 mx-auto">
+              <div class="text-white p-5 shadow-sm rounded banner">
+                <h1 class="display-3">SHOPCLUES</h1>
+                <p class="lead">An exciting place for the whole family to shop.❤️😍😎</p>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- End -->
+      
+          <div class="row" id = "product">
+            <!-- Gallery item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4" id = "p_list" ng-repeat ="product in products  ">
+              <div class="bg-white rounded shadow-sm"><img ng-src="{{product.p_image}}" alt="" class="img-fluid card-img-top">
+                <div class="p-4">
+                  <h5> <a href="#" class="text-dark">{{product.p_name}}</a></h5>
+                  <p class="small text-muted mb-0">{{product.p_desc}}</p>
+                  <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+                    <div><label>Rs. {{product.p_price}}</label></div>
+                    <button class="btn btn-primary btn-sm"><div class="badge badge-danger px-3 rounded-pill font-weight-normal" data-bs-toggle="modal" data-bs-target="#exampleModal" ng-click="add_pay(product)">Buy</div></button>
+                    <button class="btn btn-secondary btn-sm"><div class="badge badge-danger px-3 rounded-pill font-weight-normal" ng-click="add_cart(product)">Cart</div></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" >
+    <div class="modal-content" >
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Hurrah 😎 Let's get this product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"  ng-repeat="cart in cartpay">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img ng-src="{{cart.p_image}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{cart.p_name}}</h5>
+                <p class="card-text">{{cart.p_desc}}</p>
+              <!--<p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Payment Mode</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>Choose...</option>
+                  <option value="1">Debit Card</option>
+                  <option value="2">Net Banking</option>
+                  <option value="3">Credit Card</option>
+                </select>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-click="remove_cart(cart)">Close</button>
+        <button type="button" class="btn btn-primary">Pay</button>
+      </div>
+    </div>
+  </div>
+</div>
+      
+            <!--<div class = "pull-right col-md-6">
+              <div class = "panel panel-primary">
+                <div class = "panel-heading">
+                  <h5>MY CART</h5>
+                </div>
+                <div class = "panel-body table-responsive">
+                  <table class = "table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat = "cart in carts" ng-init = "setTotals(cart)">
+                        <td>{{cart.p_name}}</td>
+                        <td>Rs.{{cart.p_price}}</td>
+                        <td><button type = "button" ng-click = "remove_cart(cart)" class = "btn btn-danger">Remove from cart<span class = "glyphicon glyphicon-remove"></span></button></td>
+                      </tr>
+                      <tr>
+                        <td align = "right">Total</td>
+                        <td>Rs. {{total}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>-->
+
+
+
+<!-- Lead -->
+<div class="row py-5">
+  <div class="col-lg-12 mx-auto">
+    <div class="text-white p-5 shadow-sm rounded banner">
+      <h1 class="display-4" id="cart_anchor">Cart Items 🛒</h1>
+     
+      </p>
+    </div>
+  </div>
+</div>
+<!-- End -->
+            <!-- Gallery item for cart-->
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4" id = "p_list" ng-repeat ="cart in carts" ng-init="setTotals(cart)">
+              <div class="bg-white rounded shadow-sm"><img ng-src="{{cart.p_image}}" alt="" class="img-fluid card-img-top">
+                <div class="p-4">
+                  <h5> <a href="#" class="text-dark">{{cart.p_name}}</a></h5>
+                  <p class="small text-muted mb-0">{{cart.p_desc}}</p>
+                  <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+                    <div><label>Rs. {{cart.p_price}}</label></div>
+                    <button class="btn btn-secondary btn-danger btn-sm"><div class="badge badge-danger px-3 rounded-pill font-weight-normal" ng-click="remove_cart(cart)">Remove cart item</div></button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <h3>Cart items total amount:</h3>
+              <h5>Rs. {{total}}</h5>
+            <!-- End -->
+      
+          </div>
+          <div class="py-5 text-right"><a href="#" class="btn btn-dark px-5 py-3 text-uppercase">Show me more</a></div>
+        </div>
+      </div>
+    
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+
+  </body>
+</html>
